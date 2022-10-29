@@ -13,15 +13,38 @@ sudo apt install python3-boto3
 ```bash
 touch ansible.cfg
 ```
-### contains the follow:
+##### contains the follow:
 ```
 [defaults]
 inventory = inventory
 
 [inventory]
-enabled_plugins = ini
+enabled_plugins = ini, aws_ec2
 ```
 
+```bash
+touch inventory/host
+```
+##### contains the follow:
+```
+[local]
+localhost ansible_connection=local
+```
+
+```bash
+touch ./inventory/hosts.aws_ec2.yml
+```
+##### contains the follow:
+```
+---
+plugin: aws_ec2
+regions:
+  - us-west-2
+```
+## Display a graph of your inventory of managed hosts
+```bash
+ansible-inventory --graph
+```
 
 ```YAML
 config here
