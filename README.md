@@ -88,6 +88,7 @@ $ ansible -m ping aws_ec2
     "changed": false,
     "ping": "pong"
 }
+```
 
 # Creating Ansible playbook
 
