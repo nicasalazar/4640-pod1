@@ -1,0 +1,54 @@
+---
+- name: task1
+  hosts: all
+  tasks:
+    - name: create regular user in ubuntu
+      become: true
+      ansible.builtin.user:
+        name: ubun
+        password: ""
+        groups: sudo
+        append: yes
+        state: "present"
+        shell: "/bin/bash"
+        system: false
+        create_home: true
+        home: "/home/ubun"
+      when: ansible_distribution in ["Ubuntu", "Debian"]
+    - name: create regular user in red hat enterprise linux
+      become: true
+      ansible.builtin.user:
+        name: redhat
+        password: ""
+        groups: wheel
+        append: yes
+        state: "present"
+        shell: "/bin/bash"
+        system: false
+        create_home: true
+        home: "/home/redhat"
+      when: ansible_distribution in ["Fedora", "Red Hat Enterprise Linux", "CentOS", "Rocky Linux"]
+    - name: grab ./ssh from current user and copy to new user
+      fetch:
+        src: "~/.ssh"
+        dest: "/home/ubun/"
+        flat: yes
+        owner: "ubun"
+    - name: disable connection to server via ssh as the root user
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: '^PermitRootLogin'
+        line: "PermitRootLogin no"
+        state: present
+        backup: yes
+      become: yes
+      notify:
+       - restart ssh
+    - name: Start service sshd, if not started
+      ansible.builtin.service:
+        name: sshd
+        state: started
+    - name: Restart service sshd, in all cases
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
