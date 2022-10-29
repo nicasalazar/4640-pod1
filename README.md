@@ -65,11 +65,7 @@ $ ansible-inventory --graph
 
 
 ##### Check that all managed nodes can be reached
-```bash
-ansible all -m ping
-```
 
-#### Should display something like this:
 ```bash
 $ ansible -m ping local
 localhost | SUCCESS => {
