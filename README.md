@@ -53,9 +53,16 @@ regions:
 ```
 ##### Display a graph of your inventory of managed hosts
 ```bash
-ansible-inventory --graph
+$ ansible-inventory --graph
+@all:
+  |--@aws_ec2:
+  |  |--ip-10-42-10-168.us-west-2.compute.internal
+  |  |--ip-10-42-10-4.us-west-2.compute.internal
+  |--@local:
+  |  |--localhost
+  |--@ungrouped:
 ```
-![alt text](https://github.com/nicasalazar/4640-pod1/blob/main/ansibele.JPG "Ansible Graph")
+
 
 ##### Check that all managed nodes can be reached
 ```bash
