@@ -27,7 +27,7 @@
         system: false
         create_home: true
         home: "/home/redhat"
-      when: ansible_distribution in ["Fedora", "Red Hat Enterprise Linux", "CentOS", "Rocky Linux"]
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
     - name: grab ./ssh from current user and copy to new user
       fetch:
         src: "~/.ssh"
