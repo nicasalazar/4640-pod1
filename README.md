@@ -57,6 +57,24 @@ ansible-inventory --graph
 ```
 ![alt text](https://github.com/nicasalazar/4640-pod1/blob/main/ansibele.JPG "Ansible Graph")
 
+##### Check that all managed nodes can be reached
+```bash
+ansible all -m ping
+```
+
+#### Should display something like this:
+```bash
+$ ansible -m ping local
+localhost | SUCCESS => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python3"
+    },
+    "changed": false,
+    "ping": "pong"
+}
+```
+
+
 # Creating Ansible playbook
 
 ## Create User Playbook
