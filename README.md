@@ -33,7 +33,7 @@ enabled_plugins = ini, aws_ec2
 ```
 ### 2. Create a new inventory directory with a host file
 ```bash
-touch inventory/host
+touch ./inventory/host
 ```
 ##### which contains the following:
 ```
