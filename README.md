@@ -45,6 +45,7 @@ regions:
 ```bash
 ansible-inventory --graph
 ```
+![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Ansible Graph")
 
 ```YAML
 config here
