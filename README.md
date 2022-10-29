@@ -41,17 +41,84 @@ plugin: aws_ec2
 regions:
   - us-west-2
 ```
-## Display a graph of your inventory of managed hosts
+##### Display a graph of your inventory of managed hosts
 ```bash
 ansible-inventory --graph
 ```
 ![alt text](https://github.com/nicasalazar/4640-pod1/blob/main/ansibele.JPG "Ansible Graph")
 
 # Creating Ansible playbook
+
+## Create User Playbook
+Creates a new regular user on both the Ubuntu and Red Hat Enterprise Linux VM's with the following:
+1. A home directory in /home
+2. A bash login shell
+3. The ability to use sudo
+
 ```bash
 touch user.yml
 ```
 
 ```YAML
+---
+- name: task1
+  hosts: all
+  tasks:
+    - name: create regular user in ubuntu
+      become: true
+      ansible.builtin.user:
+        name: ubun
+        password: ""
+        groups: sudo
+        append: yes
+        state: "present"
+        shell: "/bin/bash"
+        system: false
+        create_home: true
+        home: "/home/ubun"
+      when: ansible_distribution in ["Ubuntu", "Debian"]
+    - name: create regular user in red hat enterprise linux
+      become: true
+      ansible.builtin.user:
+        name: redhat
+        password: ""
+        groups: wheel
+        append: yes
+        state: "present"
+        shell: "/bin/bash"
+        system: false
+        create_home: true
+        home: "/home/redhat"
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+    - name: grab ./ssh from current user and copy to new user
+      fetch:
+        src: "~/.ssh"
+        dest: "/home/ubun/"
+        flat: yes
+        owner: "ubun"
+    - name: disable connection to server via ssh as the root user
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: '^PermitRootLogin'
+        line: "PermitRootLogin no"
+        state: present
+        backup: yes
+      become: yes
+      notify:
+       - restart ssh
+    - name: Start service sshd, if not started
+      ansible.builtin.service:
+        name: sshd
+        state: started
+    - name: Restart service sshd, in all cases
+      ansible.builtin.service:
+        name: sshd
+        state: restarted
+```
 
+## Install Podman Playbook
+Installs podman an open source container engine which is used for developing, managing and running container images.
+
+```bash
+touch podman.yml
 ```
