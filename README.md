@@ -50,6 +50,8 @@ touch ./inventory/hosts.aws_ec2.yml
 plugin: aws_ec2
 regions:
   - us-west-2
+hostnames:
+  - network-interface.association.public-ip
 ```
 ##### Display a graph of your inventory of managed hosts
 ```bash
