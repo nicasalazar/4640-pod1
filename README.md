@@ -12,6 +12,13 @@ sudo apt install python3-boto3
 # Configuring Ansible
 ```bash
 touch ansible.cfg
+```
+contains the follow:
+[defaults]
+inventory = inventory
+
+[inventory]
+enabled_plugins = ini
 
 ```YAML
 config here
