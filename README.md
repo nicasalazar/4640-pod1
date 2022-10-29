@@ -1,3 +1,12 @@
+# Creating 2 Virtual Machines on AWS
+* Ubuntu 22.04
+* Red Hat Enterprise Linux 8
+
+##### SSH into both VMs
+```bash
+ssh -i /path/key-pair-name.pem instance-user-name@instance-private-IPv4-address
+```
+
 # Installing Ansible
 ```bash
 sudo apt update
@@ -121,4 +130,31 @@ Installs podman an open source container engine which is used for developing, ma
 
 ```bash
 touch podman.yml
+```
+
+```YAML
+---
+- name: install podman
+   hosts: all
+   become: yes
+  tasks:
+    - name: installing podman on ubuntu
+      apt:
+        name: podman
+       state: present
+      when: ansible_distribution == 'Debian' or ansible_distribution == 'Ubuntu'
+    - name: installing podman on red hat enterprise linux
+      yum:
+        name: podman
+        state: present
+      when: ansible_distribution == 'CentOS' or ansible_distribution == 'Red Hat Enterprise Linux'
+    - name: Pull httpd:2-alpine image from dockerhub.
+       podman_image:
+         name: docker.io/httpd
+         tag: 2-alpine
+    - name: Running httpd image.
+        containers.podman.podman_container:
+          name: my-first-container
+          image:  docker.io/httpd:2-alpine
+          state: started
 ```
