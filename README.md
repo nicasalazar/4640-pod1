@@ -79,6 +79,15 @@ localhost | SUCCESS => {
 }
 ```
 
+```bash
+$ ansible -m ping aws_ec2
+52.32.250.93 SUCCESS {
+    "ansibe_facts": {
+       "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "ping": "pong"
+}
 
 # Creating Ansible playbook
 
