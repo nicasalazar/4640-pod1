@@ -47,6 +47,11 @@ ansible-inventory --graph
 ```
 ![alt text](https://github.com/nicasalazar/4640-pod1/blob/main/ansibele.JPG "Ansible Graph")
 
+# Creating Ansible playbook
+```bash
+touch user.yml
+```
+
 ```YAML
-config here
+
 ```
