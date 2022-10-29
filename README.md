@@ -19,6 +19,7 @@ sudo apt install python3-boto3
 ```
 
 # Configuring Ansible
+##### create an ansible configuration file
 ```bash
 touch ansible.cfg
 ```
@@ -31,6 +32,7 @@ inventory = inventory
 enabled_plugins = ini, aws_ec2
 ```
 ------
+##### create a new inventory directory with a host file
 ```bash
 touch inventory/host
 ```
@@ -40,6 +42,7 @@ touch inventory/host
 localhost ansible_connection=local
 ```
 ------
+##### create a host.aws_ec2.yml file in the inventory directory
 ```bash
 touch ./inventory/hosts.aws_ec2.yml
 ```
